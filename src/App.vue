@@ -34,4 +34,17 @@ mark {
     background-color: palegoldenrod;
 }
 
+.main {
+    width: 90% !important;
+}
+
+.box {
+    border: 2px solid rgba(0,0,0,0.25);
+    padding: 1em 1em !important; /* materialize override */
+}
+
+.center {
+    margin: 0 auto;
+}
+
 </style>

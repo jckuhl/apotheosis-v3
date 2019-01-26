@@ -5,42 +5,42 @@
                 <span class="brand-logo">Apotheosis</span>
             </router-link>
             <ul class="right hide-on-med-and-down">
-                <li :class="isActive('landing')">
+                <li :class="isActive('landing')" @click="setActive('landing')">
                     <router-link to='/landing'>
                         Getting Started
                     </router-link>
                 </li>
-                <li :class="isActive('universe')">
+                <li :class="isActive('universe')" @click="setActive('universe')">
                     <router-link to="/universe">
                         Universe
                     </router-link>
                 </li>
-                <li :class="isActive('storyboard')">
+                <li :class="isActive('storyboard')" @click="setActive('storyboard')">
                     <router-link to="storyboard">
                         Storyboarder
                     </router-link>
                 </li>
-                <li :class="isActive('electron')">
+                <li :class="isActive('electron')" @click="setActive('electron')">
                     <router-link to="electron">
                         Desktop
                     </router-link>
                 </li>
-                <li :class="isActive('nano')">
+                <li :class="isActive('nano')"  @click="setActive('nano')">
                     <router-link to="/nano">
                         NaNoWriMo
                     </router-link>
                 </li>
-                <li :class="isActive('about')">
+                <li :class="isActive('about')" @click="setActive('about')">
                     <router-link to='/about'>
                         About
                     </router-link>
                 </li>
-                <li :class="isActive('about')">
+                <li :class="isActive('profile')" @click="setActive('profile')">
                     <router-link to="/profile">
                         Profile
                     </router-link>
                 </li>
-                <li :class="isActive('logout')">
+                <li :class="isActive('logout')"  @click="setActive('logout')">
                     <router-link to="logout">
                         Log Out
                     </router-link>
@@ -61,8 +61,10 @@ export default Vue.extend({
     },
     methods: {
         isActive(location: string): string {
-            const path = this.$router.currentRoute.name;
-            return path === location ? 'active' : '';
+            return this.currentPage === location ? 'active' : '';
+        },
+        setActive(location: string) {
+            this.currentPage = location;
         }
     }
 });

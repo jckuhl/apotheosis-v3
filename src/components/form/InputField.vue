@@ -4,12 +4,13 @@
             <i class="prefix material-icons" v-if="icon">{{ icon }}</i>
             <label :for="id">{{ label }}: </label>
             <input class="validate"
-                :type="type" 
+                :type="inputType" 
                 :name="id" 
                 :id="id" 
+                :autocomplete="autocomplete"
+                :placeholder="placeHolderText"
                 v-model="value" 
                 @change="passValue" 
-                :autocomplete="autocomplete"
             >
         </div>
     </div>
@@ -24,11 +25,28 @@ export default Vue.extend({
         type: String,
         id: String,
         autocomplete: String,
-        icon: String
+        icon: String,
+        placeholder: String
     },
     data() {
         return {
             value: ''
+        }
+    },
+    computed: {
+        inputType(): string {
+            if(this.type === undefined) {
+                return 'text';
+            } else {
+                return this.type;
+            }
+        },
+        placeHolderText(): string {
+            if(this.placeholder === 'undefined') {
+                return '';
+            } else {
+                return this.placeholder;
+            }
         }
     },
     methods: {
