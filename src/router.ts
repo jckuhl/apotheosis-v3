@@ -28,12 +28,18 @@ export default new Router({
         {
           path: '/universe',
           name: 'universe',
-          component: () => import(/* webpackChunkName: "universe" */ './views/Universe.vue')
+          component: () => import(/* webpackChunkName: "universe" */ './views/Universe.vue'),
+          children: [
+
+          ]
         },
         {
           path: '/storyboard',
           name: 'storyboard',
-          component: () => import(/* webpackChunkName: "storyboard" */ './views/StoryBoard.vue')
+          component: () => import(/* webpackChunkName: "storyboard" */ './views/StoryBoard.vue'),
+          children: [
+
+          ]
         },
         {
           path: '/electron',
@@ -44,13 +50,13 @@ export default new Router({
           path: '/profile',
           name: 'profile',
           component: () => import(/* webpackChunkName: "profile" */ './views/Profile.vue')
-        },
-        {
-          path: '/logout',
-          name: 'logout',
-          component: () => import(/* webpackChunkName: "logout" */ './views/LogOut.vue')
-        },
+        }
       ]
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: () => import(/* webpackChunkName: "logout" */ './views/LogOut.vue')
     },
   ],
 });

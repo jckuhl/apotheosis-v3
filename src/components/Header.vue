@@ -5,7 +5,7 @@
                 <span class="brand-logo">Apotheosis</span>
             </router-link>
             <ul class="right hide-on-med-and-down">
-                <li :class="isActive('start')">
+                <li :class="isActive('landing')">
                     <router-link to='/landing'>
                         Getting Started
                     </router-link>
@@ -20,12 +20,22 @@
                         Storyboarder
                     </router-link>
                 </li>
+                <li :class="isActive('electron')">
+                    <router-link to="electron">
+                        Desktop
+                    </router-link>
+                </li>
+                <li :class="isActive('nano')">
+                    <router-link to="/nano">
+                        NaNoWriMo
+                    </router-link>
+                </li>
                 <li :class="isActive('about')">
                     <router-link to='/about'>
                         About
                     </router-link>
                 </li>
-                <li :class="isActive('profile')">
+                <li :class="isActive('about')">
                     <router-link to="/profile">
                         Profile
                     </router-link>
@@ -44,10 +54,14 @@
 import Vue from 'vue'
 export default Vue.extend({
     name: 'Header',
+    data() {
+        return {
+            currentPage: this.$router.currentRoute.name
+        };
+    },
     methods: {
         isActive(location: string): string {
             const path = this.$router.currentRoute.name;
-            console.log(path);
             return path === location ? 'active' : '';
         }
     }
