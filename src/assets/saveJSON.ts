@@ -1,5 +1,5 @@
 export function saveJSON(json: string): string {
-    const file = new Blob(['file text'], { type: 'application/json'})
+    const file = new Blob([json], { type: 'application/json'})
     return URL.createObjectURL(file);
 }
 

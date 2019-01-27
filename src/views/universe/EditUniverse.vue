@@ -22,8 +22,8 @@ export default Vue.extend({
     methods: {
         saveUniverseToDisk() {
             if(this.universe) {
-                let json = JSON.stringify(this.universe);
-                let url = saveJSON(json);
+                const json = JSON.stringify(this.universe);
+                const url = saveJSON(json);
                 saveToFile(url, toFileName(this.universe.getName(), 'json'));
             }
         },
