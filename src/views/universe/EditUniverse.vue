@@ -8,7 +8,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import store from '@/store';
-import { saveJSON, saveToFile } from '@/assets/saveJSON';
+import { saveJSON, saveToFile, toFileName } from '@/assets/saveJSON';
 import Universe from '@/models/universe';
 
 export default Vue.extend({
@@ -24,7 +24,7 @@ export default Vue.extend({
             if(this.universe) {
                 let json = JSON.stringify(this.universe);
                 let url = saveJSON(json);
-                saveToFile(url, `${this.universe.getName()}.json`);
+                saveToFile(url, toFileName(this.universe.getName(), 'json'));
             }
         },
         saveUniverse() {

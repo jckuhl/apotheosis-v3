@@ -13,3 +13,16 @@ export function saveToFile(url: string, filename: string): any {
         document.body.removeChild(a);
     }, 0);
 }
+
+/**
+ * Creates a friendly filename with no spaces
+ *
+ * @param {*} name the name of the file
+ * @param {*} ext the extension of the file name, the . is provided if omitted
+ * @returns
+ */
+export function toFileName(name: string, ext: string): string {
+    ext = ext.startsWith('.') ? ext : '.' + ext;
+    name = name.toLowerCase().replace(new RegExp(' ', 'g'), '_');
+    return name + ext;
+}
