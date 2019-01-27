@@ -21,6 +21,6 @@
     "no-unused-variable": {
       "severity": "warn"
     },
-    "trailing-comma": false
+    "trailing-comma": false,
   }
 }

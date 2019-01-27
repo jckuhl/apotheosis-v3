@@ -2,8 +2,8 @@
     <div>
         <h5>{{ title }}</h5>
         <div v-for="prop of data" :key="prop.id">
-            {{ prop.name }}
-            <i class="material-icons right">edit</i>
+            <router-link :to="path(prop.id)">{{ prop.name }}
+            <i class="material-icons right">edit</i></router-link>
         </div>
     </div>
 </template>
@@ -14,6 +14,11 @@ export default Vue.extend({
     props: {
         data: Array,
         title: String
+    },
+    methods: {
+        path(id) {
+            return `/editUniverse/${id}`;
+        }
     }
 });
 </script>

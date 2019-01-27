@@ -30,7 +30,17 @@ export default new Router({
                         path: '',
                         name: 'universe',
                         component: () => {
-                            return import( /* webpackChunkName: "universe" */ './views/universe/NewUniverse.vue');
+                            return import(
+                                /* webpackChunkName: "universe" */ './views/universe/NewUniverse.vue'
+                            );
+                        }
+                    },
+                    {
+                        path: '/editUniverse/:id',
+                        component: ()=> {
+                            return import(
+                                /* webpackChunkName: "universe" */ './views/universe/EditUniverse.vue'
+                            );
                         }
                     }]
                 },

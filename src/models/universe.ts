@@ -3,8 +3,8 @@ import applyMixin from './applyMixin';
 import Character from './character';
 
 export default class Universe implements Customizable  {
+    public readonly id: string;
     private name: string;
-    private id: string;
     private characters: Character[];
     constructor(name: string, id: string) {
         this.name = name;
@@ -14,10 +14,6 @@ export default class Universe implements Customizable  {
 
     public getName(): string {
         return this.name;
-    }
-
-    public getId(): string {
-        return this.id;
     }
 
     public addCharacter(character: Character) {

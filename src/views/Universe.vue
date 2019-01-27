@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import store from '@/store';
 import SideBar from '@/components/shared/SideBar.vue';
 import Universe from '@/models/universe.ts';
 
@@ -21,9 +22,9 @@ export default Vue.extend({
     components: {
         SideBar
     },
-    data() {
-        return {
-            universes: [] as Universe[]
+    computed: {
+        universes() {
+            return store.state.universes;
         }
     }
 });
