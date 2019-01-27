@@ -55,7 +55,12 @@ export default new Router({
                 {
                     path: '/electron',
                     name: 'electron',
-                    component: () => import( /* webpackChunkName: "storyboard" */ './views/StoryBoard.vue')
+                    component: () => import( /* webpackChunkName: "electron" */ './views/Electron.vue')
+                },
+                {
+                    path: '/nano',
+                    name: 'nano',
+                    component: () => import( /* webpackChunkName: "nano" */ './views/Nano.vue')
                 },
                 {
                     path: '/profile',

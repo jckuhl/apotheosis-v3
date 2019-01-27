@@ -16,7 +16,7 @@
                     </router-link>
                 </li>
                 <li :class="isActive('storyboard')" @click="setActive('storyboard')">
-                    <router-link to="storyboard">
+                    <router-link to="/storyboard">
                         Storyboarder
                     </router-link>
                 </li>
@@ -41,7 +41,7 @@
                     </router-link>
                 </li>
                 <li :class="isActive('logout')"  @click="setActive('logout')">
-                    <router-link to="logout">
+                    <router-link to="/logout">
                         Log Out
                     </router-link>
                 </li>

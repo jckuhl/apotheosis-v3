@@ -1,10 +1,7 @@
 <template>
     <div class="container main">
         <div class="row">
-            <header class="col s12 center-align" style="margin-bottom:1em;">
-                <h1>Apotheosis</h1>
-                <h6>late 16th century: via ecclesiastical Latin from Greek apotheōsis, from apotheoun ‘make a god of’, from apo ‘from’ + theos ‘god’.</h6>
-            </header>
+            <app-title />
             <div class="row">
                 <section class="col s6">
                     <h4>What is Apotheosis?</h4>
@@ -30,12 +27,14 @@
 import Vue from 'vue';
 import Login from '@/components/home/Login.vue';
 import Register from '@/components/home/Register.vue';
+import AppTitle from '@/components/shared/AppTitle.vue';
 
 export default Vue.extend({
     name: 'home',
     components: {
         Login,
         Register,
+        AppTitle
     },
     data() {
         return {

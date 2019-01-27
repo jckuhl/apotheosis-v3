@@ -2,7 +2,7 @@
     <div class="container main">
         <div class="row">
             <div class="col s3">
-                <side-bar :data="universes" :title="'Your Universes'"/>
+                <side-bar :data="universes" :title="'Your Universes'" :pathbase="'/editUniverse'"/>
             </div>
             <div class="col s9">
                 <router-view/>

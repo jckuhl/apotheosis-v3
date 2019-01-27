@@ -12,9 +12,28 @@ export default Vue.extend({
 
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville|PT+Mono|Satisfy');
+
+
+
+// font-family: 'Satisfy', cursive;
+// font-family: 'Libre Baskerville', serif;
+// font-family: 'PT Mono', monospace;
+
+$font-text: 'Libre Baskerville', serif;
+$font-title: 'Satisfy', cursive;
+$font-code: 'PT Mono', monospace;
 
 html {
     font-size: 16px;
+}
+
+body {
+    font-family: $font-text;
+}
+
+.title {
+    font-family: $font-title;
 }
 
 .small {
@@ -27,7 +46,7 @@ html {
 
 code {
     background-color: oldlace;
-    font-family: monospace;
+    font-family: $font-code;
 }
 
 mark {

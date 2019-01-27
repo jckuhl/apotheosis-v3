@@ -13,11 +13,12 @@ import Vue from 'vue';
 export default Vue.extend({
     props: {
         data: Array,
-        title: String
+        title: String,
+        pathbase: String
     },
     methods: {
-        path(id) {
-            return `/editUniverse/${id}`;
+        path(id): string {
+            return `${this.$props.pathbase}/${id}`;
         }
     }
 });
