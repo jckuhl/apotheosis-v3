@@ -13,6 +13,10 @@ export default class AuthorSense {
         this.found = [];
     }
 
+    public getFoundNames(): string[] {
+        return this.found;
+    }
+
     public sense(str: string, event: any) {
         this.str = str;
         const { data , inputType } = event;
