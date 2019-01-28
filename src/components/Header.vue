@@ -1,8 +1,8 @@
 <template>
     <nav>
-        <div class="nav-wrapper blue darken-3">
+        <div class="nav nav-wrapper blue darken-3">
             <router-link to="/">
-                <span class="brand-logo">Apotheosis</span>
+                <span class="brand-logo title">Apotheosis</span>
             </router-link>
             <ul class="right hide-on-med-and-down">
                 <li :class="isActive('landing')" @click="setActive('landing')">
@@ -69,3 +69,10 @@ export default Vue.extend({
     }
 });
 </script>
+
+<style lang="scss" scoped>
+    .nav {
+        padding: 0rem 1rem;
+    }
+</style>
+

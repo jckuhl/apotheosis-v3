@@ -2,15 +2,10 @@
     <div class="container main">
         <div class="row">
             <div class="col s3">
-                <content-list :data="posts" :title="'My Posts'"/>
+                <content-list :data="nanoPosts" :title="'My Posts'"/>
             </div>
             <div class="col s9">
-                <new-post/>
-            </div>
-            <div class="row">
-                <div class="col s9">
-                    <posts v-for="post of posts" :key="post.id" :post="post"/>
-                </div>
+                <new-post />
             </div>
         </div>
     </div>
@@ -21,6 +16,8 @@ import Vue from 'vue';
 import ContentList from '@/components/shared/ContentList.vue';
 import NewPost from '@/components/nano/NewPost.vue';
 import Posts from '@/components/nano/Posts.vue';
+import Post from '@/models/post';
+import store from '@/store';
 
 export default Vue.extend({
     name: 'nano',
@@ -31,11 +28,13 @@ export default Vue.extend({
     },
     data() {
         return {
-            posts: [
-                { name: 'Post 1', id: '1234'},
-                { name: 'Post 2', id: '2345'}
-            ]
+            posts: [] as Post[]
         };
+    },
+    computed: {
+        nanoPosts(): Post[] {
+            return this.posts = store.state.posts;
+        }
     }
 });
 </script>

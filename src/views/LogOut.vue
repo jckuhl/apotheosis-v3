@@ -22,7 +22,7 @@ export default Vue.extend({
     },
     data() {
         return {
-            seconds: 5
+            seconds: 7
         };
     },
     mounted() {

@@ -1,17 +1,29 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Universe from './models/universe';
+import Post from './models/post';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
         universeIds: new Set() as Set<string>,
-        universes: [] as Universe[]
+        postsIds: new Set() as Set<string>,
+        universes: [] as Universe[],
+        posts: [] as Post[]
     },
     mutations: {
         addId(store, payload: string) {
             store.universeIds.add(payload);
+        },
+        addPostId(store, payload: string) {
+            store.postsIds.add(payload)
+        },
+        removePostId(store, payload: string) {
+            store.postsIds.delete(payload);
+        },
+        addPost(store, payload: Post) {
+            store.posts.unshift(payload);
         },
         addUniverse(store, payload: Universe) {
             store.universes.push(payload);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="input-field">
+        <div class="input-field" :class="{ 'inline' : inlineInput}">
             <i class="prefix material-icons" v-if="icon">{{ icon }}</i>
             <label :for="id">{{ label }}: </label>
             <input class="validate"
@@ -26,7 +26,8 @@ export default Vue.extend({
         id: String,
         autocomplete: String,
         icon: String,
-        placeholder: String
+        placeholder: String,
+        inline: Boolean
     },
     data() {
         return {
@@ -34,6 +35,12 @@ export default Vue.extend({
         }
     },
     computed: {
+        inlineInput() {
+            if(this.inline) {
+                return true;
+            }
+            return false;
+        },
         inputType(): string {
             if(this.type === undefined) {
                 return 'text';

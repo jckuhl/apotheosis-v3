@@ -2,7 +2,7 @@
     <div class="content-list">
         <h5>{{ title }}</h5>
         <div v-for="prop of data" :key="prop.id">
-            {{ prop.name }}
+            {{ prop.title }}
         </div>
     </div>
 </template>
@@ -22,6 +22,7 @@ export default Vue.extend({
 
 .content-list {
     min-height: 100vh;
+    border-right: 2px solid rgba(0,0,0,0.25);
 }
 
 </style>
