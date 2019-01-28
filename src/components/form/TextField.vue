@@ -17,7 +17,8 @@ export default Vue.extend({
     data() {
         return {
             value: '',
-            authorSense: null as any,
+            authorSense: {} as AuthorSense,
+            sensedValues: [] as string[]
         };
     },
     methods: {
@@ -25,8 +26,11 @@ export default Vue.extend({
             this.$emit('pass-value', this.value);
         },
         sense(event: Event) {
+            console.log(event);
             this.authorSense.sense(this.value, event);
-            console.log(this.authorSense);
+            if(this.authorSense.getFoundNames()) {
+                this.sensedValues = this.authorSense.getFoundNames();
+            }
         }
     },
     mounted() {

@@ -9,15 +9,35 @@ export default class AuthorSense {
 
     constructor(private names: string[]) {}
     
-    public clearAll() {
+    /**
+     * Clears the found array of old values
+     *
+     * @memberof AuthorSense
+     */
+    private _clearAll(): void {
         this.found = [];
     }
 
+    /**
+     * Returns the array of names that match
+     *
+     * @returns {string[]}
+     * @memberof AuthorSense
+     */
     public getFoundNames(): string[] {
         return this.found;
     }
 
-    public sense(str: string, event: any) {
+    /**
+     * From an array of given names, returns the ones that match characters typed past an @ symbol 
+     * until a non alphanumeric character is hit
+     *
+     * @param {string} str
+     * @param {*} event
+     * @returns
+     * @memberof AuthorSense
+     */
+    public sense(str: string, event: any): void {
         this.str = str;
         const { data , inputType } = event;
         if (data === '@' && !this.recording) {
@@ -27,7 +47,7 @@ export default class AuthorSense {
             return;
         }
         if (this.recording && data && data.match(/[a-zA-Z]/) && inputType == 'insertText') {
-            this.clearAll();
+            this._clearAll();
             this.substr = this.str.toLowerCase().slice(this.atIndex + 1)
             this.names.filter((thing) => thing.toLowerCase().startsWith(this.substr)).forEach((thing) => {
                 console.log(thing);
@@ -35,7 +55,7 @@ export default class AuthorSense {
             });
         }
         if (this.recording && data && data.match(/[^a-zA-Z]/)) {
-            this.clearAll();
+            this._clearAll();
             this.recording = false;
             this.substr = '';
             this.start = this.str.length;
