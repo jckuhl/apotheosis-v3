@@ -3,7 +3,7 @@
         <div class="input-field" :class="{ 'inline' : inlineInput}">
             <i class="prefix material-icons" v-if="icon">{{ icon }}</i>
             <label :for="id">{{ label }}: </label>
-            <input class="validate"
+            <input ref="input" class="validate"
                 :type="inputType" 
                 :name="id" 
                 :id="id" 

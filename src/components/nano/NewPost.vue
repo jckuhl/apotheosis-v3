@@ -87,6 +87,9 @@ export default Vue.extend({
                 id
             )
             store.commit('addPost', post);
+            this.$children.forEach((child) => {
+                (child.$refs.input as HTMLInputElement | HTMLTextAreaElement).value = '';
+            });
         },
         getPostData(...args: string[]) {
             const [value, key] = args;

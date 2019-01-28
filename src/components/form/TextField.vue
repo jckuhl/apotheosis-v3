@@ -1,7 +1,7 @@
 <template>
     <div class="input-field col s12">
         <label for="newpost">{{ label }}</label>
-        <textarea class="materialize-textarea" id="newpost" v-model="value" @change="passValue"/>
+        <textarea ref="input" class="materialize-textarea" id="newpost" v-model="value" @change="passValue"/>
     </div>
 </template>
 
