@@ -22,7 +22,12 @@
                 <text-field :label="'New Post'" @pass-value="getPostData($event, 'blurb')"/>
             </div>
             <div class="row">
-                <div class="col s3">
+                <div class="col s12">
+                    <p>You can also add the stats for your novel (optional)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s4">
                     <input-field 
                         :label="'Current Novel'"
                         :id="'current-novel'"
@@ -30,7 +35,7 @@
                         :inline="true"
                         @pass-value="getPostData($event, 'novelTitle')"/>
                 </div>
-                <div class="col s3">
+                <div class="col s4">
                     <input-field 
                         :label="'Word Count'"
                         :id="'word-count'"
@@ -42,7 +47,7 @@
             </div>
             <div class="row">
                 <div class="col s3">
-                    <button class="btn blue darken-1" @click="newPost">New Post</button>
+                    <button class="btn blue darken-1" @click="newPost" :disabled="invalidForm">New Post</button>
                 </div>
             </div>
         </form>
@@ -73,6 +78,12 @@ export default Vue.extend({
             } as any
         };
     },
+    computed: {
+        invalidForm(): boolean {
+            return (this.post.blurb === ''
+                || this.post.title === '')
+        }
+    },
     methods: {
         newPost(event: Event) {
             event.preventDefault();
@@ -82,7 +93,7 @@ export default Vue.extend({
             const post = new Post(
                 this.post.blurb,
                 this.post.novelTitle,
-                this.post.wordCount,
+                this.post.wordCount | 0,
                 this.post.title,
                 id
             )
@@ -90,6 +101,9 @@ export default Vue.extend({
             this.$children.forEach((child) => {
                 (child.$refs.input as HTMLInputElement | HTMLTextAreaElement).value = '';
             });
+            for(let prop in this.post) {
+                this.post[prop] = typeof this.post[prop] === 'string' ? '' : 0
+            }
         },
         getPostData(...args: string[]) {
             const [value, key] = args;

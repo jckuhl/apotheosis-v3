@@ -43,5 +43,16 @@ export default new Vuex.Store({
     },
     actions: {
 
+    },
+    getters: {
+        getAllNamedThings(store): Array<string> | undefined {
+            if(store.universes) {
+                let result = [] as Array<string>;
+                store.universes.forEach((universe) => {
+                    result = result.concat(universe.getAllNames());
+                });
+                return result;
+            }
+        }
     }
 });
