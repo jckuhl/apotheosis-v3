@@ -1,8 +1,21 @@
 <template>
-    <div>
+    <section>
         Edit {{ universe }}
         <button class="btn blue darken-1" @click="saveUniverseToDisk">Save</button>
-    </div>
+        <div>
+            <h5>Delete?</h5>
+            <h6>Danger!  No Return Zone</h6>
+            <p>Once you delete this universe, universe and all its contents are lost forever.</p>
+            <button class="btn red darken-1" @click="confirmDelete">Confirm</button>
+            <div v-if="deleteConfirmed">
+                <input-field
+                    :label="`Enter your universe's name to continue`" 
+                    @pass-value="setDeleteName"
+                />
+                <button class="btn red darken-1">Delete</button>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script lang="ts">
@@ -10,13 +23,18 @@ import Vue from 'vue';
 import store from '@/store';
 import { saveJSON, saveToFile, toFileName } from '@/assets/saveJSON';
 import Universe from '@/models/universe';
+import InputField from '@/components/form/InputField.vue';
 
 export default Vue.extend({
     name: 'EditUniverse',
+    components: {
+        InputField
+    },
     data() {
         return {
             universe: {} as Universe | undefined,
-            confirmDelete: ''
+            deleteName: '',
+            deleteConfirmed: false
         };
     },
     methods: {
@@ -32,8 +50,14 @@ export default Vue.extend({
                 store.commit('updateUniverse', this.universe);
             }
         },
+        confirmDelete() {
+            this.deleteConfirmed = true;
+        },
+        setDeleteName(payload: string) {
+            this.deleteName = payload;
+        },
         deleteUniverse() {
-            if (this.universe && this.confirmDelete === this.universe.getName()) {
+            if (this.universe && this.deleteName === this.universe.getName()) {
                 store.commit('deleteUniverse', this.universe.id);
                 this.$router.push('/universe');
             }

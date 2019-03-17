@@ -26,12 +26,18 @@ export default Vue.extend({
         };
     },
     mounted() {
-        setInterval(()=> {
-            this.seconds -= 1;
-            if(this.seconds === 0) {
-                this.$router.push('/');
-            }
-        }, 1000);
+        console.log(this.$router.currentRoute.path);
+        (new Promise((resolve, reject)=> {
+            setInterval(()=> {
+                this.seconds -= 1;
+                if(this.seconds === 0) {
+                    resolve();
+                }
+                if(this.$router.currentRoute.path !== '/logout') {
+                    reject();
+                }
+            }, 1000);
+        })).then(()=> this.$router.push('/'));
     }
 });
 </script>

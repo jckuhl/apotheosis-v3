@@ -1,4 +1,4 @@
-const environments ={
+const environments = {
     staging: {
         port: process.env.PORT,
         env: 'staging'

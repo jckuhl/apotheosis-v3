@@ -1,8 +1,8 @@
 <template>
     <div>
-        <header class="col s12 center-align" style="margin-bottom:1em;">
-            <h1 class="title">Apotheosis</h1>
-            <h6 class="title">late 16th century: via ecclesiastical Latin from Greek apotheōsis, from apotheoun ‘make a god of’, from apo ‘from’ + theos ‘god’.</h6>
+        <header class="title" style="margin-bottom:1em;">
+            <h1>Apotheosis</h1>
+            <h4>late 16th century: via ecclesiastical Latin from Greek apotheōsis, from apotheoun ‘make a god of’, from apo ‘from’ + theos ‘god’.</h4>
         </header>
     </div>
 </template>
@@ -13,3 +13,13 @@ export default Vue.extend({
     name: 'AppTitle'
 });
 </script>
+
+<style lang="scss" scoped>
+    header {
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: 3rem;
+    }
+</style>

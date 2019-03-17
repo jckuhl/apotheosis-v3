@@ -34,3 +34,52 @@ export default Vue.extend({
     }
 });
 </script>
+
+<style lang="scss" scoped>
+
+.bold {
+    font-weight: bold;
+}
+
+.switch input[type="checkbox"]:checked::before {
+    left: 10px;
+    background-color: blue;
+}
+
+.switch input[type="checkbox"]::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.switch input[type="checkbox"]:not(:checked)::before {
+    right: 10px;
+    background-color: red;
+}
+
+.switch input[type="checkbox"]::after {
+    content: '';
+    display: block;
+    width: 1rem;
+    height: 0.5rem;
+    background-color: grey;
+}
+
+.switch input[type="checkbox"] {
+    -webkit-appearance: none;
+    position: relative;
+    margin: 0 1rem;
+}
+
+.switch input[type="checkbox"]:disabled::before {
+    background-color: darkgrey;
+}
+</style>
+

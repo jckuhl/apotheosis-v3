@@ -54,7 +54,8 @@ mark {
 }
 
 .main {
-    width: 90% !important;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .box {
