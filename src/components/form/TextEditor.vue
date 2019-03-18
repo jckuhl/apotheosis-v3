@@ -8,6 +8,12 @@
             :mode="mode"
             @set-editor-mode="richEditCommand"
         />
+        <text-editor-select 
+            :options="fontSizes" 
+            :label="'Font Size'" 
+            :command="'fontSize'" 
+            @select-value="richEditCommand"
+        />
         <iframe ref="editor"></iframe>
         <button @click="passContent">Save</button>
     </section>
@@ -16,6 +22,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import TextEditorBtn from '@/components/form/TextEditorBtn.vue';
+import TextEditorSelect from '@/components/form/TextEditorSelect.vue'
 
 interface iEditCommandArgs {
     command: string;
@@ -26,7 +33,8 @@ interface iEditCommandArgs {
 export default Vue.extend({
     name: 'TextEditor',
     components: {
-        TextEditorBtn
+        TextEditorBtn,
+        TextEditorSelect
     },
     data() {
         return {
@@ -34,8 +42,9 @@ export default Vue.extend({
             editorButtons: [
                 { command: 'bold', label: 'B', style: { 'font-weight': 'bold' }},
                 { command: 'italic', label: 'I', style: { 'font-style': 'italic' }},
-                { command: 'underline', label: 'U', style: { 'text-decoration': 'underline'}}
+                { command: 'underline', label: 'U', style: { 'text-decoration': 'underline'}},
             ],
+            fontSizes: [] as Object[],
             editor: {} as Document,
             iframe: {} as HTMLIFrameElement,
             mode: ''
@@ -56,6 +65,10 @@ export default Vue.extend({
         this.iframe = this.$refs.editor as HTMLIFrameElement
         this.editor = this.iframe.contentDocument as Document;
         this.editor.designMode = "on";
+        
+        for(let i = 1; i < 8; i++) {
+            this.fontSizes.push({ value: i, desc: i});
+        }
     }
 })
 </script>
