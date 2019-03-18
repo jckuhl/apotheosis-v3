@@ -1,12 +1,14 @@
 <template>
-    <div class="switch">
-        <label>
-            <span :class='notSelectedClass'>{{ off }}</span>
-        <input ref="checkbox" type="checkbox" :disabled="disable" :checked="selected" v-model="checked">
-        <span class="lever"></span>
-            <span :class='selectedClass'>{{ on }}</span>
-        </label>
-  </div>
+    <label class="switch">
+        <span :class='notSelectedClass'>{{ off }}</span>
+        <input ref="checkbox" 
+            type="checkbox" 
+            :disabled="disable" 
+            :checked="selected" 
+            v-model="checked" 
+            @change="toggleSwitch">
+        <span :class='selectedClass'>{{ on }}</span>
+    </label>
 </template>
 
 <script lang="ts">
@@ -30,6 +32,11 @@ export default Vue.extend({
         },
         selectedClass(): string | void {
             return this.checked ? 'bold' : '';
+        }
+    },
+    methods: {
+        toggleSwitch() {
+            this.$emit('toggle-switch', this.checked);
         }
     }
 });
