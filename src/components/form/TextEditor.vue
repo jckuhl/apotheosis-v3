@@ -19,9 +19,7 @@
                 <i class="material-icons right">insert_link</i>    
             </button>
         </text-editor-button-grid>
-        <div class="iframe_container" >
-            <div ref="editor" contenteditable="true" spellcheck="true" @keyup.native="ctrl"></div>
-        </div>
+        <div class="editor" ref="editor" contenteditable="true" spellcheck="true" @keyup.native="ctrl"></div>
         <button @click="passContent">Save</button>
         <text-editor-modal 
             :prompt="promptText" 
@@ -121,9 +119,7 @@ export default Vue.extend({
         }
     },
     mounted() {
-        this.editor = this.$refs.editor as HTMLDivElement
-        // this.editor = this.iframe.contentDocument as Document;
-        // this.editor.designMode = "on";
+        this.editor = this.$refs.editor as HTMLDivElement;
 
         (document.querySelector('body') as HTMLBodyElement).addEventListener('keyup', (event)=> {
             if(event.key === 'Control' || event.key === 'Meta')
@@ -142,3 +138,13 @@ export default Vue.extend({
 })
 </script>
 
+<style lang="scss" scoped>
+    .editor {
+        padding: 0.5rem;
+        min-height: 200px;
+        border: 2px solid black;
+        resize: vertical;
+        overflow: scroll;
+        /* inset shadow, do later */
+    }
+</style>
