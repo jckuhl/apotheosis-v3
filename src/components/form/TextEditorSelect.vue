@@ -1,6 +1,6 @@
 <template>
     <label :for="label">
-        {{ label }}
+        <i class="material-icons right">{{ label }}</i>
         <select @change="selectValue">
             <option v-for="(opt, index) of options" :key="index" :value="opt.value">{{ opt.desc }}</option>
         </select>
@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+
 export default Vue.extend({
     name: 'TextEditorSelect',
     props: {
