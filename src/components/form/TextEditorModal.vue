@@ -1,17 +1,17 @@
 <template>
     <modal :style="{ visibility: displayModal}">
-        <label for="input">
-            {{ prompt }}
-            <input type="text" name="input" id="input" v-model="response">
-            <button>Cancel</button>
-            <button>Accept</button>
-        </label>
+        <form @submit="accept">
+            <label for="input">
+                {{ prompt }}
+                <input type="text" name="input" id="input" v-model="response" ref="modalInput">
+                <button @click="accept" type="submit">Accept</button>
+                <button @click="cancel">Cancel</button>
+            </label>
+        </form>
     </modal>
 </template>
 
 <script lang="ts">
-
-///<reference path="./../../shims-vue-styled-components.d.ts" />
 
 import Vue from 'vue';
 import styled from 'vue-styled-components';
@@ -34,6 +34,7 @@ export default Vue.extend({
     },
     props: {
         prompt: String,
+        promptCommand: String,
         visible: Boolean
     },
     data() {
@@ -44,6 +45,31 @@ export default Vue.extend({
     computed: {
         displayModal(): string {
             return this.visible ? 'visible' : 'hidden';
+        }
+    },
+    watch: {
+        visible() {
+            if(this.$refs.modalInput && this.visible) {
+                (this.$refs.modalInput as HTMLInputElement).focus();
+            }
+        }
+    },
+    methods: {
+        accept(event: Event) {
+            event.preventDefault();
+            if (event.type === 'click' || event.type === '') {
+                if (this.promptCommand === 'createLink') {
+                    // TODO: add regex to check if HTTP is in response and maybe check for valid url
+                    this.response = 'http://' + this.response;
+                }
+                this.$emit('accept', this.response);
+                this.response = '';
+            }
+        },
+        cancel(event: Event) {
+            event.preventDefault();
+            this.$emit('cancel');
+            this.response = '';
         }
     }
 });

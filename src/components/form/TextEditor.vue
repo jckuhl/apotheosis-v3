@@ -15,15 +15,21 @@
                 :command="'fontSize'" 
                 @select-value="richEditCommand"
             />
-            <button @click="(event)=> displayPrompt('linkURL', 'insertLink')">
+            <button @click="(event)=> displayPrompt('LINK')">
                 <i class="material-icons right">insert_link</i>    
             </button>
         </text-editor-button-grid>
-        <div class="iframe_container">
-            <iframe ref="editor" width="100%"></iframe>
+        <div class="iframe_container" >
+            <div ref="editor" contenteditable="true" spellcheck="true" @keyup.native="ctrl"></div>
         </div>
         <button @click="passContent">Save</button>
-        <text-editor-modal :prompt="promptText" :visible="showPrompt" />
+        <text-editor-modal 
+            :prompt="promptText" 
+            :visible="showPrompt"
+            :promptCommand="promptCommand"
+            @cancel="closePrompt" 
+            @accept="getValue"
+        />
     </text-editor-container>
 </template>
 
@@ -36,7 +42,7 @@ import TextEditorModal from '@/components/form/TextEditorModal.vue';
 
 interface iEditCommandArgs {
     command: string;
-    showDefaultUI: boolean;
+    showDefaultUI?: boolean;
     arg: any;
 }
 
@@ -76,38 +82,60 @@ export default Vue.extend({
                 { command: 'insertLink', label: 'insert_link' },
             ],
             fontSizes: [] as Object[],
-            editor: {} as Document,
+            editor: {} as HTMLDivElement,
             iframe: {} as HTMLIFrameElement,
             mode: '',
             showPrompt: false,
-            promptText: ''
+            promptText: '',
+            promptCommand: '',
         }
     },
     methods: {
-        passContent(event: Event) {
-            const content = this.editor.body.textContent;
+        passContent(event: Event): void {
+            const content = this.editor.textContent;
             this.$emit('pass-content', content);
         },
-        richEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs) {
-            this.iframe.focus();
-            this.editor.execCommand(command, showDefaultUI, arg);
+        richEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs): void {
+            this.editor.focus();
+            document.execCommand(command, showDefaultUI, arg);
             this.mode = this.mode !== command ? command : '';
         },
-        displayPrompt(type: string) {
-            console.log('wtf');
-            console.log(type);
-            if(type === 'linkURL') {
-                this.showPrompt = true;
-                this.promptText = 'Please enter a valid URL: ';
+        displayPrompt(type: string): void {
+            switch (type) {
+                case 'LINK':
+                    this.showPrompt = true;
+                    this.promptText = 'Please enter a valid URL: ';
+                    this.promptCommand = 'createLink';
+                    break;
             }
+        },
+        getValue(payload: string): void {
+            this.richEditCommand({ command: this.promptCommand, arg: payload});
+            this.closePrompt();
+        },
+        closePrompt(): void {
+            this.showPrompt = false;
+        },
+        ctrl(event: Event) {
+            console.log('event:', event.type);
         }
     },
     mounted() {
-        this.iframe = this.$refs.editor as HTMLIFrameElement
-        this.editor = this.iframe.contentDocument as Document;
-        this.editor.designMode = "on";
+        this.editor = this.$refs.editor as HTMLDivElement
+        // this.editor = this.iframe.contentDocument as Document;
+        // this.editor.designMode = "on";
+
+        (document.querySelector('body') as HTMLBodyElement).addEventListener('keyup', (event)=> {
+            if(event.key === 'Control' || event.key === 'Meta')
+                this.editor.contentEditable = 'true';
+        });
+
+        (document.querySelector('body') as HTMLBodyElement).addEventListener('keydown', (event)=> {
+            if(event.key === 'Control' || event.key === 'Meta')
+                this.editor.contentEditable = 'false';
+        });
         
-        for(let i = 1; i < 8; i++) {
+        for (let i = 1; i < 8; i++) {
             this.fontSizes.push({ value: i, desc: i});
         }
     }
