@@ -13,13 +13,16 @@
                 :options="fontSizes" 
                 :label="'format_size'" 
                 :command="'fontSize'" 
-                @select-value="richEditCommand"
+                @select-value="richTextEditCommand"
             />
-            <button @click="(event)=> displayPrompt('LINK')">
-                <i class="material-icons right">insert_link</i>    
+            <button @click="(event)=> displayPrompt('Please enter a valid URL: ', 'createLink')">
+                <i class="material-icons">insert_link</i>    
+            </button>
+            <button @click="(event)=> displayPrompt('Please enter a valid URL: ', 'insertImage')">
+                <i class="material-icons right">insert_photo</i> 
             </button>
         </text-editor-button-grid>
-        <div class="editor" ref="editor" contenteditable="true" spellcheck="true" @keyup.native="ctrl"></div>
+        <div class="editor" ref="editor" contenteditable="true" spellcheck="true"></div>
         <button @click="passContent">Save</button>
         <text-editor-modal 
             :prompt="promptText" 
@@ -93,22 +96,18 @@ export default Vue.extend({
             const content = this.editor.textContent;
             this.$emit('pass-content', content);
         },
-        richEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs): void {
+        richTextEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs): void {
             this.editor.focus();
             document.execCommand(command, showDefaultUI, arg);
             this.mode = this.mode !== command ? command : '';
         },
-        displayPrompt(type: string): void {
-            switch (type) {
-                case 'LINK':
-                    this.showPrompt = true;
-                    this.promptText = 'Please enter a valid URL: ';
-                    this.promptCommand = 'createLink';
-                    break;
-            }
+        displayPrompt(promptText: string, promptCommand: string): void {
+            this.showPrompt = true;
+            this.promptText = promptText;
+            this.promptCommand = promptCommand;
         },
         getValue(payload: string): void {
-            this.richEditCommand({ command: this.promptCommand, arg: payload});
+            this.richTextEditCommand({ command: this.promptCommand, arg: payload});
             this.closePrompt();
         },
         closePrompt(): void {
@@ -120,17 +119,6 @@ export default Vue.extend({
     },
     mounted() {
         this.editor = this.$refs.editor as HTMLDivElement;
-
-        (document.querySelector('body') as HTMLBodyElement).addEventListener('keyup', (event)=> {
-            if(event.key === 'Control' || event.key === 'Meta')
-                this.editor.contentEditable = 'true';
-        });
-
-        (document.querySelector('body') as HTMLBodyElement).addEventListener('keydown', (event)=> {
-            if(event.key === 'Control' || event.key === 'Meta')
-                this.editor.contentEditable = 'false';
-        });
-        
         for (let i = 1; i < 8; i++) {
             this.fontSizes.push({ value: i, desc: i});
         }
