@@ -5,13 +5,13 @@ import Character from './character';
 export default class Universe implements Customizable  {
     public readonly id: string;
     private name: string;
-    private templates: any;    //'any' because user can modify templates object
+    private templates: any;    // 'any' because user can modify templates object
     constructor(name: string, id: string) {
         this.name = name;
         this.id = id;
         this.templates = {
             characters: [] as Character[]
-        }
+        };
     }
 
     public getName(): string {
@@ -19,10 +19,10 @@ export default class Universe implements Customizable  {
     }
 
     public getAllNames(): string[] {
-        const result: string[] = []
+        const result: string[] = [];
         result.push(this.name);
-        Object.values(this.templates).forEach((v)=> {
-            (v as Array<any>).forEach((value: any) => result.push(value.name));
+        Object.values(this.templates).forEach((v) => {
+            (v as any[]).forEach((value: any) => result.push(value.name));
         });
         return result;
     }

@@ -4,10 +4,12 @@
             <text-editor-btn v-for="btn of editorButtons" 
                 :key="btn.label"
                 :command="btn.command" 
+                :showDefaultUI="btn.showDefaultUI"
+                :arg="btn.arg"
                 :label="btn.label" 
                 :btnStyle="btn.style"
                 :mode="mode"
-                @set-editor-mode="richEditCommand"
+                @set-editor-mode="richTextEditCommand"
             />
             <text-editor-select 
                 :options="fontSizes" 
@@ -19,7 +21,7 @@
                 <i class="material-icons">insert_link</i>    
             </button>
             <button @click="(event)=> displayPrompt('Please enter a valid URL: ', 'insertImage')">
-                <i class="material-icons right">insert_photo</i> 
+                Image: <i class="material-icons right">insert_photo</i> 
             </button>
         </text-editor-button-grid>
         <div class="editor" ref="editor" contenteditable="true" spellcheck="true"></div>
@@ -37,9 +39,9 @@
 <script lang="ts">
 import Vue from 'vue'
 import styled from 'vue-styled-components';
-import TextEditorBtn from '@/components/form/TextEditorBtn.vue';
-import TextEditorSelect from '@/components/form/TextEditorSelect.vue';
-import TextEditorModal from '@/components/form/TextEditorModal.vue';
+import TextEditorBtn from './TextEditorBtn.vue';
+import TextEditorSelect from './TextEditorSelect.vue';
+import TextEditorModal from './TextEditorModal.vue';
 
 interface iEditCommandArgs {
     command: string;
@@ -77,7 +79,9 @@ export default Vue.extend({
                 { command: 'underline', label: 'format_underline' },
                 { command: 'insertOrderedList', label: 'format_list_numbered' },
                 { command: 'insertUnorderedList', label: 'format_list_bulleted' },
-                { command: 'unlink', label: 'link_off'}
+                { command: 'unlink', label: 'link_off'},
+                { command: 'formatBlock', label: 'code', arg: '<PRE>' },
+                { command: 'formatBlock', label: 'format_quote', arg: '<blockquote>'}
             ],
             promptButtons: [
                 { command: 'insertLink', label: 'insert_link' },
@@ -93,7 +97,7 @@ export default Vue.extend({
     },
     methods: {
         passContent(event: Event): void {
-            const content = this.editor.textContent;
+            const content = this.editor.innerHTML;
             this.$emit('pass-content', content);
         },
         richTextEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs): void {
@@ -102,6 +106,8 @@ export default Vue.extend({
             this.mode = this.mode !== command ? command : '';
         },
         displayPrompt(promptText: string, promptCommand: string): void {
+            console.log((document.getSelection().getRangeAt(0)));
+            
             this.showPrompt = true;
             this.promptText = promptText;
             this.promptCommand = promptCommand;
@@ -112,9 +118,6 @@ export default Vue.extend({
         },
         closePrompt(): void {
             this.showPrompt = false;
-        },
-        ctrl(event: Event) {
-            console.log('event:', event.type);
         }
     },
     mounted() {

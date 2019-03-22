@@ -3,7 +3,7 @@
         <form @submit="accept">
             <label for="input">
                 {{ prompt }}
-                <input type="text" name="input" id="input" v-model="response" ref="modalInput">
+                <input type="text" name="input" id="input" v-model="response" ref="modalInput" placeholder="https://">
                 <button @click="accept" type="submit">Accept</button>
                 <button @click="cancel">Cancel</button>
             </label>
@@ -57,11 +57,9 @@ export default Vue.extend({
     methods: {
         accept(event: Event) {
             event.preventDefault();
-            if (event.type === 'click' || event.type === '') {
-                if (this.promptCommand === 'createLink') {
-                    // TODO: add regex to check if HTTP is in response and maybe check for valid url
-                    this.response = 'http://' + this.response;
-                }
+            if (event.type === 'click') {
+                const httpMatch = this.response.match(/https:\/\/|http:\/\//);
+                this.response = (httpMatch ? '' : 'http://') + this.response;
                 this.$emit('accept', this.response);
                 this.response = '';
             }

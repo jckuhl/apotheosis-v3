@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import TextEditor from '@/components/form/TextEditor.vue';
+import TextEditor from '@/components/form/texteditor/TextEditor.vue';
 
 export default Vue.extend({
     components: {
