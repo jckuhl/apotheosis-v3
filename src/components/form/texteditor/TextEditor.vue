@@ -30,6 +30,7 @@
             :prompt="promptText" 
             :visible="showPrompt"
             :promptCommand="promptCommand"
+            :selection="selection"
             @cancel="closePrompt" 
             @accept="getValue"
         />
@@ -39,6 +40,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import styled from 'vue-styled-components';
+import { saveSelection, restoreSelection } from '@/utils/saveSelection.ts';
 import TextEditorBtn from './TextEditorBtn.vue';
 import TextEditorSelect from './TextEditorSelect.vue';
 import TextEditorModal from './TextEditorModal.vue';
@@ -83,9 +85,6 @@ export default Vue.extend({
                 { command: 'formatBlock', label: 'code', arg: '<PRE>' },
                 { command: 'formatBlock', label: 'format_quote', arg: '<blockquote>'}
             ],
-            promptButtons: [
-                { command: 'insertLink', label: 'insert_link' },
-            ],
             fontSizes: [] as Object[],
             editor: {} as HTMLDivElement,
             iframe: {} as HTMLIFrameElement,
@@ -93,26 +92,31 @@ export default Vue.extend({
             showPrompt: false,
             promptText: '',
             promptCommand: '',
+            selection: []
         }
     },
     methods: {
         passContent(event: Event): void {
             const content = this.editor.innerHTML;
             this.$emit('pass-content', content);
+            console.log(content);
         },
         richTextEditCommand({command, showDefaultUI=false, arg=null}: iEditCommandArgs): void {
             this.editor.focus();
             document.execCommand(command, showDefaultUI, arg);
             this.mode = this.mode !== command ? command : '';
+            if(this.selection && command === 'createLink') {
+                console.log(this.selection.toString());
+            }
         },
         displayPrompt(promptText: string, promptCommand: string): void {
-            console.log((document.getSelection().getRangeAt(0)));
-            
+            this.selection = saveSelection();
             this.showPrompt = true;
             this.promptText = promptText;
             this.promptCommand = promptCommand;
         },
         getValue(payload: string): void {
+            restoreSelection(this.selection);
             this.richTextEditCommand({ command: this.promptCommand, arg: payload});
             this.closePrompt();
         },

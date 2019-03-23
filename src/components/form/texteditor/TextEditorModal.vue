@@ -35,7 +35,8 @@ export default Vue.extend({
     props: {
         prompt: String,
         promptCommand: String,
-        visible: Boolean
+        visible: Boolean,
+        selection: [Array, String]
     },
     data() {
         return {
@@ -60,6 +61,9 @@ export default Vue.extend({
             if (event.type === 'click') {
                 const httpMatch = this.response.match(/https:\/\/|http:\/\//);
                 this.response = (httpMatch ? '' : 'http://') + this.response;
+                if(this.promptCommand === 'insertHTML') {
+                    this.response = `<a href="${this.response} target="_blank" rel="noopener noreferrer">${this.selection}</a>`
+                }
                 this.$emit('accept', this.response);
                 this.response = '';
             }
