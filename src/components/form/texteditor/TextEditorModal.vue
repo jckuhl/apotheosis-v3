@@ -59,17 +59,20 @@ export default Vue.extend({
         accept(event: Event) {
             event.preventDefault();
             if (event.type === 'click') {
-                const httpMatch = this.response.match(/https:\/\/|http:\/\//);
-                this.response = (httpMatch ? '' : 'http://') + this.response;
-                if(this.promptCommand === 'insertHTML') {
-                    this.response = `<a href="${this.response} target="_blank" rel="noopener noreferrer">${this.selection}</a>`
+                if(this.response) {
+                    const httpMatch = this.response.match(/https:\/\/|http:\/\//);
+                    this.response = (httpMatch ? '' : 'http://') + this.response;
+                    this.$emit('accept', this.response);
+                    this.response = '';
+                } else {
+                    this.cancel();
                 }
-                this.$emit('accept', this.response);
-                this.response = '';
             }
         },
-        cancel(event: Event) {
-            event.preventDefault();
+        cancel(event: Event | undefined = undefined) {
+            if(event) {
+                event.preventDefault();
+            }
             this.$emit('cancel');
             this.response = '';
         }

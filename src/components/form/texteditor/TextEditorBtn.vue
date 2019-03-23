@@ -6,8 +6,6 @@
 
 <script lang="ts">
 
-///<reference path="./../../shims-vue-styled-components.d.ts" />
-
 import Vue from 'vue';
 import styled from 'vue-styled-components';
 
@@ -37,7 +35,11 @@ export default Vue.extend({
     },
     methods: {
         setEditorMode(): void {
-            this.$emit('set-editor-mode', { command: this.command, showDefaultUI: this.showDefaultUI, arg: this.arg})
+            this.$emit('set-editor-mode', { 
+                command: this.command, 
+                showDefaultUI: this.showDefaultUI, 
+                arg: this.arg
+            });
         }
     }
 })

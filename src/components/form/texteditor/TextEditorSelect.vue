@@ -20,7 +20,7 @@ export default Vue.extend({
     methods: {
         selectValue(event: Event) {
             const arg = parseInt((event.target as HTMLSelectElement).value);
-            this.$emit('select-value', { command: (this as any).command, arg});
+            this.$emit('select-value', { command: (this as any).command, arg });
         }
     }
 });
