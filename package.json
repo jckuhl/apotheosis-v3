@@ -11,7 +11,7 @@
     "sandbox": "node ./sandbox/sandbox.js"
   },
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "materialize-css": "^1.0.0-rc.2",
     "mongoose": "^5.4.6",
     "portscanner": "^2.2.0",
